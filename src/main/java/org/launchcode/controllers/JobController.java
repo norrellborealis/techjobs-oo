@@ -59,6 +59,7 @@ public class JobController {
 
 
 
+
         for ( Employer employer : jobData.getEmployers().findAll()) {
             if (jobForm.getEmployerId() == employer.getId())
                     ouremployer = employer;
