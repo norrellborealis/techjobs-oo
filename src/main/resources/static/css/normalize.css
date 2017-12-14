@@ -17,6 +17,10 @@ html {
 
 body {
   margin: 0;
+
+}
+.c-error {
+  color: red;
 }
 
 /* HTML5 display definitions
@@ -126,6 +130,7 @@ b,
 strong {
   font-weight: inherit;
 }
+
 
 /**
  * Add the correct font weight in Chrome, Edge, and Safari.

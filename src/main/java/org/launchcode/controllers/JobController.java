@@ -1,6 +1,6 @@
 package org.launchcode.controllers;
 
-import org.launchcode.models.Job;
+import org.launchcode.models.*;
 import org.launchcode.models.forms.JobForm;
 import org.launchcode.models.data.JobData;
 import org.springframework.stereotype.Controller;
@@ -9,6 +9,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.swing.text.Position;
 import javax.validation.Valid;
 
 /**
@@ -49,11 +50,39 @@ public class JobController {
 
         }
 
+        Employer ouremployer = null;
+        Location ourlocation = null;
+        PositionType ourposition = null;
+        CoreCompetency ourcorecomp = null;
+
+
+
+
+
+        for ( Employer employer : jobData.getEmployers().findAll()) {
+            if (jobForm.getEmployerId() == employer.getId())
+                    ouremployer = employer;
+        }
+
+        for ( Location location : jobData.getLocations().findAll()) {
+            if (jobForm.getLocationId() == location.getId())
+                ourlocation = location;
+        }
+
+        for ( PositionType position : jobData.getPositionTypes().findAll()) {
+            if (jobForm.getPositionTypeId() == position.getId())
+                ourposition = position;
+        }
+
+        for (CoreCompetency corecompetency : jobData.getCoreCompetencies().findAll()) {
+            if (jobForm.getCoreCompetencyId() == corecompetency.getId())
+                ourcorecomp = corecompetency;
+        }
+
         Job newJob = new Job(jobForm.getName(),
-                jobData.findById(jobForm.getEmployerId()).getEmployer(),
-                jobData.findById(jobForm.getLocationId()).getLocation(),
-                jobData.findById(jobForm.getPositionTypeId()).getPositionType(),
-                jobData.findById(jobForm.getCoreCompetencyId()).getCoreCompetency());
+        ouremployer, ourlocation, ourposition, ourcorecomp);
+
+
 
         jobData.add(newJob);
         model.addAttribute(newJob);
